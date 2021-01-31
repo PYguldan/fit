@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fit.sys.entity.Result;
 import com.fit.sys.entity.User;
 import com.fit.sys.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hongwq
  * @since 2021-01-31
  */
+@Api(tags = "用户")
 @RestController
 @RequestMapping("/sys/user")
 public class UserController {
@@ -26,6 +29,7 @@ public class UserController {
     @Autowired
     IUserService userService;
 
+    @ApiOperation("分页查询")
     @GetMapping
     public ResponseEntity<Result<Object>> getAll(int page, int size) {
         IPage<User> queryResult = userService.page(new Page<>(page, size));
@@ -41,6 +45,7 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("删除")
     @DeleteMapping("/{id}")
     public ResponseEntity<Result<Object>> deleteUser(@PathVariable Long id) {
         Result result = new Result();
@@ -54,6 +59,7 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("更改")
     @PutMapping
     public ResponseEntity<Result<Object>> updateUser(@RequestBody User user) {
         Result result = new Result();
@@ -67,6 +73,7 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("增加")
     @PostMapping
     public ResponseEntity<Result<Object>> addUser(@RequestBody User user) {
         Result result = new Result();
@@ -80,6 +87,7 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("登录")
     @PostMapping("/login")
     public ResponseEntity<Result<Object>> login(@RequestBody User user) {
         Result result = new Result();

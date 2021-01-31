@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fit.sys.entity.Result;
 import com.fit.sys.entity.Course;
 import com.fit.sys.service.ICourseService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hongwq
  * @since 2021-01-31
  */
+@Api(tags = "课程")
 @RestController
 @RequestMapping("/sys/class")
 public class CourseController {
@@ -25,6 +28,7 @@ public class CourseController {
     @Autowired
     ICourseService courseService;
 
+    @ApiOperation("分页查询")
     @GetMapping
     public ResponseEntity<Result<Object>> getAll(int page, int size) {
         IPage<Course> queryResult = courseService.page(new Page<>(page, size));
@@ -40,6 +44,7 @@ public class CourseController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("删除")
     @DeleteMapping("/{id}")
     public ResponseEntity<Result<Object>> deleteCourse(@PathVariable Long id) {
         Result result = new Result();
@@ -53,6 +58,7 @@ public class CourseController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("更改")
     @PutMapping
     public ResponseEntity<Result<Object>> updateCourse(@RequestBody Course course) {
         Result result = new Result();
@@ -66,6 +72,7 @@ public class CourseController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("增加")
     @PostMapping
     public ResponseEntity<Result<Object>> addCourse(@RequestBody Course course) {
         Result result = new Result();

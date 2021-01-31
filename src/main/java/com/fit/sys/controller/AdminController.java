@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fit.sys.entity.Admin;
 import com.fit.sys.entity.Result;
 import com.fit.sys.service.IAdminService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hongwq
  * @since 2021-01-31
  */
+@Api(tags = "管理员")
 @RestController
 @RequestMapping("/sys/admin")
 public class AdminController {
     @Autowired
     private IAdminService adminService;
 
+    @ApiOperation("增加")
     @PostMapping
     public ResponseEntity<Result<Object>> addAdmin(@RequestBody Admin admin) {
         Result result = new Result();
@@ -40,6 +44,7 @@ public class AdminController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("登录")
     @PostMapping("/login")
     public ResponseEntity<Result<Object>> login(@RequestBody Admin admin) {
         Result result = new Result();
