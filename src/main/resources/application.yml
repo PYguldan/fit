@@ -3,8 +3,3 @@ server:
 spring:
   application:
     name: fit
-  datasource:
-    url: jdbc:mysql://123.56.103.142:3306/fit?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 123456

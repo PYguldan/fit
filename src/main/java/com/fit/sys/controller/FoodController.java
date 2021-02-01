@@ -128,12 +128,12 @@ public class FoodController {
     @PostMapping("/picture/{id}")
     public ResponseEntity<Result<Object>> addCourse(@PathVariable Long id, MultipartFile file) {
         FileUtil.checkSize(100, file.getSize());
-        File x = FileUtil.upload(file, filePath + "picture\\");
+        File x = FileUtil.upload(file, filePath + "picture/");
         Result result = new Result();
         try {
             Food food = foodService.getById(id);
             if (food.getSrc() != null) {
-                FileUtil.del(filePath + "picture\\" + food.getSrc().replace("file/picture/", ""));
+                FileUtil.del(filePath + "picture/" + food.getSrc().replace("file/picture/", ""));
             }
             food.setSrc("file/picture/" + x.getName());
             foodService.updateById(food);

@@ -137,12 +137,12 @@ public class CourseController {
     @PostMapping("/video/{id}")
     public ResponseEntity<Result<Object>> addCourse(@PathVariable Long id, MultipartFile file) {
         FileUtil.checkSize(100, file.getSize());
-        File x = FileUtil.upload(file, filePath + "video\\");
+        File x = FileUtil.upload(file, filePath + "video/");
         Result result = new Result();
         try {
             Course course = courseService.getById(id);
             if (course.getSrc() != null) {
-                FileUtil.del(filePath + "video\\" + course.getSrc().replace("file/video/", ""));
+                FileUtil.del(filePath + "video/" + course.getSrc().replace("file/video/", ""));
             }
             course.setSrc("file/video/" + x.getName());
             courseService.updateById(course);
