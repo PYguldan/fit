@@ -3,13 +3,15 @@ package com.fit.sys.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author hongwq
@@ -33,7 +35,10 @@ public class Food implements Serializable {
     /**
      * 每100克热量
      */
-    private Integer hot;
+    private BigDecimal hot;
 
+    private String src;
+
+    private String type;
 
 }

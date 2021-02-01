@@ -45,6 +45,25 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("通过名字分页查询")
+    @GetMapping("/like")
+    public ResponseEntity<Result<Object>> getAll(int page, int size, String username) {
+        if (username==null) {
+            username = "";
+        }
+        IPage<User> queryResult = userService.page(new Page<>(page, size), new QueryWrapper<User>().lambda().like(User::getUsername, "%" + username + "%"));
+        Result result = new Result();
+        if (queryResult == null) {
+            result.setCode(1000);
+            result.setMsg("查询失败");
+        } else {
+            result.setCode(200);
+            result.setMsg("查询成功");
+            result.setData(queryResult);
+        }
+        return ResponseEntity.ok(result);
+    }
+
     @ApiOperation("删除")
     @DeleteMapping("/{id}")
     public ResponseEntity<Result<Object>> deleteUser(@PathVariable Long id) {
@@ -77,6 +96,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Result<Object>> addUser(@RequestBody User user) {
         Result result = new Result();
+        user.setId(null);
+        user.setPassword("123456");
         if (userService.save(user)) {
             result.setCode(200);
             result.setMsg("插入成功");
