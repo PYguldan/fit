@@ -3,13 +3,16 @@ package com.fit.sys.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author hongwq
@@ -44,6 +47,21 @@ public class User implements Serializable {
      * 体重（kg）
      */
     private Integer weight;
+
+    /**
+     * 会员过期时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime vip;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    private String phone;
+
+    private Boolean sex;
 
 
 }

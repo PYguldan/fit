@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author hongwq
@@ -54,5 +54,10 @@ public class Course implements Serializable {
      * 是否要会员
      */
     private Boolean vip;
+
+    /**
+     * 封面图
+     */
+    private String pic;
 
 }

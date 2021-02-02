@@ -55,6 +55,7 @@ public class AdminController {
         } else {
             result.setCode(200);
             result.setMsg("登录成功");
+            result.setData(queryResult.getId());
         }
         return ResponseEntity.ok(result);
     }

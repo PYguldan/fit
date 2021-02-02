@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fit.sys.entity.Result;
 import com.fit.sys.entity.User;
+import com.fit.sys.mapper.CourseMapper;
 import com.fit.sys.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,25 @@ public class UserController {
 
     @Autowired
     IUserService userService;
+
+    @Autowired
+    CourseMapper courseMapper;
+
+    @ApiOperation("根据id查询")
+    @GetMapping("/{id}")
+    public ResponseEntity<Result<Object>> getAll(@PathVariable long id) {
+        User queryResult = userService.getById(id);
+        Result result = new Result();
+        if (queryResult == null) {
+            result.setCode(1000);
+            result.setMsg("查询失败");
+        } else {
+            result.setCode(200);
+            result.setMsg("查询成功");
+            result.setData(queryResult);
+        }
+        return ResponseEntity.ok(result);
+    }
 
     @ApiOperation("分页查询")
     @GetMapping
@@ -68,7 +88,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Result<Object>> deleteUser(@PathVariable Long id) {
         Result result = new Result();
-        if (userService.removeById(id)) {
+        if (userService.removeById(id) && courseMapper.deleteUser(id)) {
             result.setCode(200);
             result.setMsg("删除成功");
         } else {
@@ -119,6 +139,7 @@ public class UserController {
         } else {
             result.setCode(200);
             result.setMsg("登录成功");
+            result.setData(queryResult.getId());
         }
         return ResponseEntity.ok(result);
     }
