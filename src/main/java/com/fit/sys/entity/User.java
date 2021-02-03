@@ -3,6 +3,7 @@ package com.fit.sys.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -41,12 +42,12 @@ public class User implements Serializable {
     /**
      * 身高（cm）
      */
-    private Integer height;
+    private BigDecimal height;
 
     /**
      * 体重（kg）
      */
-    private Integer weight;
+    private BigDecimal weight;
 
     /**
      * 会员过期时间

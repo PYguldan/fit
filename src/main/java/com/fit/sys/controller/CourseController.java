@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -64,7 +65,12 @@ public class CourseController {
     @GetMapping("user/{id}")
     public ResponseEntity<Result<Object>> getCoursesByUserId(@PathVariable long id) {
         List<Long> ids = courseMapper.getCourseIds(id);
-        Collection<Course> queryResult = courseService.listByIds(ids);
+        Collection<Course> queryResult;
+        if (ids == null || ids.size() == 0) {
+            queryResult = new ArrayList<>();
+        } else {
+            queryResult = courseService.listByIds(ids);
+        }
         Result result = new Result();
         if (queryResult == null) {
             result.setCode(1000);
@@ -74,6 +80,16 @@ public class CourseController {
             result.setMsg("查询成功");
             result.setData(queryResult);
         }
+        return ResponseEntity.ok(result);
+    }
+
+    @ApiOperation("取消关注课程")
+    @DeleteMapping("user/{id}")
+    public ResponseEntity<Result<Object>> deleteRelation(@PathVariable long id, long courseId) {
+        Result result = new Result();
+        courseMapper.deleteRelation(courseId, id);
+        result.setCode(200);
+        result.setMsg("取消关注成功");
         return ResponseEntity.ok(result);
     }
 
@@ -148,7 +164,8 @@ public class CourseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Result<Object>> deleteCourse(@PathVariable Long id) {
         Result result = new Result();
-        if (courseService.removeById(id) && courseMapper.deleteCourse(id)) {
+        if (courseService.removeById(id)) {
+            courseMapper.deleteCourse(id);
             result.setCode(200);
             result.setMsg("删除成功");
         } else {
